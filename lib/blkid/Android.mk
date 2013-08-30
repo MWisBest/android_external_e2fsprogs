@@ -22,7 +22,7 @@ libext2_blkid_system_shared_libraries := libc
 
 libext2_blkid_c_includes := external/e2fsprogs/lib
 
-libext2_blkid_cflags := -O2 -g -W -Wall -fno-strict-aliasing \
+libext2_blkid_cflags := -O2 -g -W -Wall \
 	-DHAVE_UNISTD_H \
 	-DHAVE_ERRNO_H \
 	-DHAVE_NETINET_IN_H \
@@ -41,8 +41,12 @@ libext2_blkid_cflags := -O2 -g -W -Wall -fno-strict-aliasing \
 	-DHAVE_EXT2_IOCTLS \
 	-DHAVE_TYPE_SSIZE_T \
 	-DHAVE_SYS_TIME_H \
-        -DHAVE_SYS_PARAM_H \
+	-DHAVE_SYS_PARAM_H \
 	-DHAVE_SYSCONF
+
+ifneq ($(DEBUG_FORCE_STRICT_ALIASING),yes)
+libext2_blkid_cflags += -fno-strict-aliasing
+endif
 
 libext2_blkid_cflags_linux := \
 	-DHAVE_LINUX_FD_H \

@@ -116,7 +116,7 @@ e2fsck_system_shared_libraries := libc
 
 e2fsck_c_includes := external/e2fsprogs/lib
 
-e2fsck_cflags := -O2 -g -W -Wall -fno-strict-aliasing \
+e2fsck_cflags := -O2 -g -W -Wall \
 	-DHAVE_DIRENT_H \
 	-DHAVE_ERRNO_H \
 	-DHAVE_INTTYPES_H \
@@ -144,8 +144,12 @@ e2fsck_cflags := -O2 -g -W -Wall -fno-strict-aliasing \
 	-DHAVE_INTPTR_T \
 	-DENABLE_HTREE=1 \
 	-DHAVE_SYS_TIME_H \
-        -DHAVE_SYS_PARAM_H \
+	-DHAVE_SYS_PARAM_H \
 	-DHAVE_SYSCONF
+
+ifneq ($(DEBUG_FORCE_STRICT_ALIASING),yes)
+e2fsck_cflags += -fno-strict-aliasing
+endif
 
 include $(CLEAR_VARS)
 
