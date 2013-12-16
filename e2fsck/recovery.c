@@ -40,7 +40,7 @@ struct recovery_info
 enum passtype {PASS_SCAN, PASS_REVOKE, PASS_REPLAY};
 static int do_one_pass(journal_t *journal,
 				struct recovery_info *info, enum passtype pass);
-static int scan_revoke_records(journal_t *, struct buffer_head *,
+static int __attribute__((optimize("no-strict-aliasing"))) scan_revoke_records(journal_t *, struct buffer_head *,
 				tid_t, struct recovery_info *);
 
 #ifdef __KERNEL__
