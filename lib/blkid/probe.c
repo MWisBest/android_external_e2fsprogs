@@ -1167,7 +1167,7 @@ static void unicode_16be_to_utf8(unsigned char *str, int out_len,
 	str[j] = '\0';
 }
 
-static int probe_hfs(struct blkid_probe *probe __BLKID_ATTR((unused)),
+static int __attribute__((optimize("no-strict-aliasing"))) probe_hfs(struct blkid_probe *probe __BLKID_ATTR((unused)),
 			 struct blkid_magic *id __BLKID_ATTR((unused)),
 			 unsigned char *buf)
 {
