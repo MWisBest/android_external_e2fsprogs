@@ -717,7 +717,7 @@ static int do_one_pass(journal_t *journal,
 
 /* Scan a revoke record, marking all blocks mentioned as revoked. */
 
-static int scan_revoke_records(journal_t *journal, struct buffer_head *bh,
+static int __attribute__((optimize("no-strict-aliasing"))) scan_revoke_records(journal_t *journal, struct buffer_head *bh,
 			       tid_t sequence, struct recovery_info *info)
 {
 	journal_revoke_header_t *header;
