@@ -40,7 +40,7 @@ struct recovery_info
 enum passtype {PASS_SCAN, PASS_REVOKE, PASS_REPLAY};
 static int do_one_pass(journal_t *journal,
 				struct recovery_info *info, enum passtype pass);
-static int __attribute__((optimize("no-strict-aliasing"))) scan_revoke_records(journal_t *, struct buffer_head *,
+static int scan_revoke_records(journal_t *, struct buffer_head *,
 				tid_t, struct recovery_info *);
 
 #ifdef __KERNEL__
@@ -717,7 +717,7 @@ static int do_one_pass(journal_t *journal,
 
 /* Scan a revoke record, marking all blocks mentioned as revoked. */
 
-static int __attribute__((optimize("no-strict-aliasing"))) scan_revoke_records(journal_t *journal, struct buffer_head *bh,
+static int scan_revoke_records(journal_t *journal, struct buffer_head *bh,
 			       tid_t sequence, struct recovery_info *info)
 {
 	journal_revoke_header_t *header;
@@ -731,7 +731,10 @@ static int __attribute__((optimize("no-strict-aliasing"))) scan_revoke_records(j
 		unsigned long blocknr;
 		int err;
 
-		blocknr = be32_to_cpu(* ((__be32 *) (bh->b_data+offset)));
+		__be32 b;
+		memcpy(&b, bh->b_data + offset, sizeof(__be32));
+		blocknr = ext2fs_be32_to_cpu(b);
+
 		offset += 4;
 		err = journal_set_revoke(journal, blocknr, sequence);
 		if (err)
