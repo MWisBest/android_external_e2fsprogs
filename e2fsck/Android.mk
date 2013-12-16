@@ -147,10 +147,6 @@ e2fsck_cflags := -O2 -g -W -Wall \
 	-DHAVE_SYS_PARAM_H \
 	-DHAVE_SYSCONF
 
-ifneq ($(DEBUG_FORCE_STRICT_ALIASING),yes)
-e2fsck_cflags += -fno-strict-aliasing
-endif
-
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := $(e2fsck_src_files)

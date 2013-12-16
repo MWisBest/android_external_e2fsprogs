@@ -44,10 +44,6 @@ libext2_blkid_cflags := -O2 -g -W -Wall \
 	-DHAVE_SYS_PARAM_H \
 	-DHAVE_SYSCONF
 
-ifneq ($(DEBUG_FORCE_STRICT_ALIASING),yes)
-libext2_blkid_cflags += -fno-strict-aliasing
-endif
-
 libext2_blkid_cflags_linux := \
 	-DHAVE_LINUX_FD_H \
 	-DHAVE_SYS_PRCTL_H \
