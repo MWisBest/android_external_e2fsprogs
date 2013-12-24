@@ -731,7 +731,10 @@ static int scan_revoke_records(journal_t *journal, struct buffer_head *bh,
 		unsigned long blocknr;
 		int err;
 
-		blocknr = be32_to_cpu(* ((__be32 *) (bh->b_data+offset)));
+		__be32 b;
+		memcpy(&b, bh->b_data + offset, sizeof(__be32));
+		blocknr = ext2fs_be32_to_cpu(b);
+
 		offset += 4;
 		err = journal_set_revoke(journal, blocknr, sequence);
 		if (err)
